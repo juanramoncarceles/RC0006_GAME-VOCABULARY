@@ -1,0 +1,110 @@
+body {
+  font-family: sans-serif;
+}
+.main-container {
+  width: 100%;
+  margin: 4rem auto;
+  background-color: #f3f3da;
+  max-width: 500px;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px #b3b3b3;
+}
+
+.main-title {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.word-display {
+  background-color: #fdfdf3;
+  width: 50%;
+  margin: auto;
+  font-size: 1.8rem;
+  /* border-radius: 10px; */
+  line-height: 3rem;
+}
+
+.possible-solutions {
+  list-style-type: none;
+  padding: 0;
+  line-height: 2.4rem;
+  width: 50%;
+  margin: 2rem auto;
+  font-size: 1.4rem;
+}
+
+.possible-solutions li {
+  margin: 0.5rem 0;
+  background-color: #d6d6bc;
+  box-shadow: 0px 1px 3px #959595;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 15px;
+  width: 80%;
+  margin: 0.5rem auto;
+}
+
+.progress-item {
+  /*width: 25%; IMPORTANTE dependera del numero de palabras*/
+  height: 100%;
+  float: left;
+  border: 1px solid grey;
+  box-sizing: border-box;
+}
+
+.current-progress-item {
+  border: 2px solid;
+}
+
+.translate-options,
+.word-options {
+  line-height: 2rem;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.translate-options label,
+.word-options label {
+  display: block;
+}
+
+.game-content {
+  text-align: center;
+}
+
+.main-buttons-container {
+  text-align: center;
+  padding: 1rem;
+}
+
+.main-button {
+  font-size: 2rem;
+  border-radius: 8px;
+  border-style: none;
+  background-color: #31ed7c;
+  padding: 1rem;
+  line-height: 1.5rem;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.success {
+  background-color: green;
+}
+
+.warning {
+  background-color: rgb(228, 182, 30);
+}
+
+.error {
+  background-color: red;
+}
