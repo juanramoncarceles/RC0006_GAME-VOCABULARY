@@ -14,59 +14,53 @@
 
     <h1 class="main-title">VOCABULARY</h1>
 
-    <div class="progress-bar hidden" id="progress-bar">
+    <div id="game-start-screen">
+      <p>Elige las opciones</p>
 
-    </div>
-
-    <div class="main-buttons-container">
-      <button id="start-game" class="main-button">Start</button>
-      <button id="play-again" class="main-button hidden">Play again</button>
-      <button id="review-mistakes" class="main-button hidden">Review mistakes</button>
-    </div>
-
-    <div class="word-options" id="word-type-options">
-      <label>
-        Verbs / Verbos
-        <input type="radio" name="word-type" value="verbs">
-      </label>
-      <label>
-        Nouns / Nombres
-        <input type="radio" name="word-type" value="nouns" checked>
-      </label>
-      <label>
-        Adjectives / Adjetivos
-        <input type="radio" name="word-type" value="adjectives">
-      </label>
-      <!-- <label>
-        Mixed / Mezclado
-        <input type="radio" name="word-type" value="mixed">
-      </label> -->
-    </div>
-
-    <div class="translate-options" id="translation-direction-options">
-      <label>
-        De inglés a español
-        <input type="radio" name="translation-direction" checked>
-      </label>
-      <label>
-        De español a inglés
-        <input type="radio" name="translation-direction">
-      </label>
-    </div>
-
-    <div class="game-content hidden" id="game-content">
-      <div class="word-display" id="word-display">
-
+      <div class="word-options" id="word-type-options">
+        <label>
+          Verbs / Verbos
+          <input type="radio" name="word-type" value="verbs">
+        </label>
+        <label>
+          Nouns / Nombres
+          <input type="radio" name="word-type" value="nouns" checked>
+        </label>
+        <label>
+          Adjectives / Adjetivos
+          <input type="radio" name="word-type" value="adjectives">
+        </label>
       </div>
 
-      <ul class="possible-solutions" id="possible-solutions">
+      <div class="translate-options" id="translation-direction-options">
+        <label>
+          De inglés a español
+          <input type="radio" name="translation-direction" checked>
+        </label>
+        <label>
+          De español a inglés
+          <input type="radio" name="translation-direction">
+        </label>
+      </div>
 
-      </ul>
+      <div class="main-buttons-container">
+        <button class="main-button" id="start-game">Start</button>
+      </div>
+    </div>
 
+
+    <div class="game-content hidden" id="game-playing-screen">
+      <button class="btn">Salir</button>
+      <div class="progress-bar" id="progress-bar"></div>
+      <div class="word-display" id="word-display"></div>
+      <ul class="possible-solutions" id="possible-solutions"></ul>
       <p id="score"></p>
       <p id="message"></p>
-      <button>Quit</button>
-
+      <div class="main-buttons-container">
+        <button class="main-button" id="next-word-btn">Continuar</button>
+        <button class="main-button hidden" id="play-again">Play again</button>
+        <button class="main-button hidden" id="review-mistakes">Review mistakes</button>
+      </div>
     </div>
 
     <!-- <span>skip</span> -->

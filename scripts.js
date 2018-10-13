@@ -24,22 +24,21 @@ const startGameBtn = document.querySelector("#start-game");
 const playAgainBtn = document.querySelector("#play-again");
 const reviewMistakesBtn = document.querySelector("#review-mistakes");
 const progressBar = document.querySelector("#progress-bar");
-const gameContent = document.querySelector("#game-content");
+const gamePlayingScreen = document.querySelector("#game-playing-screen");
 const wordDisplay = document.querySelector("#word-display");
 const possibleSolutionsList = document.querySelector("#possible-solutions");
 const messageDisplay = document.querySelector("#message");
-const wordTypeOptions = document.querySelector("#word-type-options");
-const translationDirection = document.querySelector(
-  "#translation-direction-options"
-);
+const scoreDisplay = document.querySelector("#score");
+const gameStartScreen = document.querySelector("#game-start-screen");
+const nextBtn = document.querySelector("#next-word-btn");
 
 startGameBtn.addEventListener("click", function() {
-  startGameBtn.classList.add("hidden");
-  wordTypeOptions.classList.add("hidden");
-  translationDirection.classList.add("hidden");
-  progressBar.classList.remove("hidden");
-  gameContent.classList.remove("hidden");
-
+  gameStartScreen.classList.add("hidden");
+  gamePlayingScreen.classList.remove("hidden");
+  const wordTypeOptions = gameStartScreen.querySelector("#word-type-options");
+  const translationDirection = gameStartScreen.querySelector(
+    "#translation-direction-options"
+  );
   engToEsp = translationDirection.querySelectorAll(
     'input[type="radio"][name="translation-direction"]'
   )[0].checked
@@ -99,6 +98,8 @@ function nextStep(arrayOfWordObjects, step) {
     arrayOfWordObjects.slice(step).some(wordObject => !wordObject.correct) &&
     step < arrayOfWordObjects.length
   ) {
+    nextBtn.disabled = true;
+    nextBtn.classList.add("disabled-btn");
     // Find the step corresponding to the next incorrect word
     while (arrayOfWordObjects[step].correct) {
       step++;
@@ -175,17 +176,15 @@ function checkOption(e, arrayOfWordObjects, step) {
 
       arrayOfWordObjects[step].correct = false;
 
-      step++;
-      // TODO: use a setTimeout()
-      nextStep(arrayOfWordObjects, step);
+      endRound(arrayOfWordObjects, step);
     } else {
       attempts++;
       progressBar.children.item(step).classList.add("warning");
     }
   } else {
-    arrayOfWordObjects[step].correct = true;
-
     messageDisplay.innerHTML = "Perfect!";
+
+    arrayOfWordObjects[step].correct = true;
 
     progressBar.children.item(step).classList.remove("warning");
     progressBar.children.item(step).classList.add("success");
@@ -196,15 +195,36 @@ function checkOption(e, arrayOfWordObjects, step) {
       .item(step)
       .classList.remove("current-progress-item", "error");
 
-    step++;
-    nextStep(arrayOfWordObjects, step);
+    endRound(arrayOfWordObjects, step);
   }
 }
 
+function endRound(arrayOfWordObjects, step) {
+  nextBtn.disabled = false;
+  nextBtn.classList.remove("disabled-btn");
+  nextBtn.addEventListener("click", () => {
+    // ERROR: Se llama a si misma varias veces
+    emptyNode(messageDisplay);
+    step++;
+    console.log(step);
+    nextStep(arrayOfWordObjects, step);
+  });
+}
+
 function endGame(arrayOfWordObjects) {
-  gameContent.classList.add("hidden");
   messageDisplay.innerHTML = "Finish!";
+  let correctWords = 0;
+  for (let i = 0; i < arrayOfWordObjects.length; i++) {
+    if (arrayOfWordObjects[i].correct) {
+      correctWords++;
+    }
+  }
+  scoreDisplay.innerHTML = `${correctWords}/${arrayOfWordObjects.length}`;
+  wordDisplay.classList.add("hidden");
+  possibleSolutionsList.classList.add("hidden");
+  // esconder boton quit
   playAgainBtn.classList.remove("hidden");
+  nextBtn.classList.add("hidden");
   if (arrayOfWordObjects.some(wordObject => !wordObject.correct)) {
     reviewMistakesBtn.classList.remove("hidden");
   }
@@ -212,7 +232,7 @@ function endGame(arrayOfWordObjects) {
   reviewMistakesBtn.addEventListener("click", function() {
     playAgainBtn.classList.add("hidden");
     reviewMistakesBtn.classList.add("hidden");
-    gameContent.classList.remove("hidden");
+    gamePlayingScreen.classList.remove("hidden");
 
     step = 0;
     nextStep(arrayOfWordObjects, step);
@@ -221,13 +241,8 @@ function endGame(arrayOfWordObjects) {
 
 // TODO: 'Quit' button should do the same as this function
 playAgainBtn.addEventListener("click", function() {
-  playAgainBtn.classList.add("hidden");
-  reviewMistakesBtn.classList.add("hidden");
-  progressBar.classList.add("hidden");
-
-  startGameBtn.classList.remove("hidden");
-  wordTypeOptions.classList.remove("hidden");
-  translationDirection.classList.remove("hidden");
+  gamePlayingScreen.classList.add("hidden");
+  gameStartScreen.classList.remove("hidden");
 
   emptyNode(progressBar);
   messageDisplay.innerHTML = "";

@@ -69,7 +69,6 @@ body {
   line-height: 2rem;
   text-align: center;
   padding: 1rem;
-  margin-top: 1.5rem;
 }
 
 .translate-options label,
@@ -95,6 +94,11 @@ body {
   line-height: 1.5rem;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.6);
   cursor: pointer;
+}
+
+.disabled-btn {
+  background-color: lightgrey;
+  cursor: default;
 }
 
 .success {
