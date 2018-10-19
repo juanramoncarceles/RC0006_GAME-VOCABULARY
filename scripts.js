@@ -35,6 +35,12 @@ const nextBtn = document.querySelector("#next-word-btn");
 startGameBtn.addEventListener("click", function() {
   gameStartScreen.classList.add("hidden");
   gamePlayingScreen.classList.remove("hidden");
+  wordDisplay.classList.remove("hidden");
+  possibleSolutionsList.classList.remove("hidden");
+  playAgainBtn.classList.add("hidden");
+  reviewMistakesBtn.classList.add("hidden");
+  scoreDisplay.classList.add("hidden");
+  nextBtn.classList.remove("hidden");
   const wordTypeOptions = gameStartScreen.querySelector("#word-type-options");
   const translationDirection = gameStartScreen.querySelector(
     "#translation-direction-options"
@@ -92,6 +98,7 @@ function startGame(dictionary, engToEsp) {
 }
 
 function nextStep(arrayOfWordObjects, step) {
+  emptyNode(messageDisplay);
   // Check if there are still incorrect answers from the current step onwards
   // and also if there are still words, otherwise end the round
   if (
@@ -202,12 +209,11 @@ function checkOption(e, arrayOfWordObjects, step) {
 function endRound(arrayOfWordObjects, step) {
   nextBtn.disabled = false;
   nextBtn.classList.remove("disabled-btn");
-  nextBtn.addEventListener("click", () => {
-    // ERROR: Se llama a si misma varias veces
-    emptyNode(messageDisplay);
+  // I added the addEventListener inside the function because I have to pass scope variables
+  nextBtn.addEventListener("click", function goToNextStep() {
     step++;
-    console.log(step);
     nextStep(arrayOfWordObjects, step);
+    nextBtn.removeEventListener("click", goToNextStep);
   });
 }
 
@@ -220,23 +226,27 @@ function endGame(arrayOfWordObjects) {
     }
   }
   scoreDisplay.innerHTML = `${correctWords}/${arrayOfWordObjects.length}`;
+  scoreDisplay.classList.remove("hidden");
   wordDisplay.classList.add("hidden");
   possibleSolutionsList.classList.add("hidden");
-  // esconder boton quit
   playAgainBtn.classList.remove("hidden");
   nextBtn.classList.add("hidden");
   if (arrayOfWordObjects.some(wordObject => !wordObject.correct)) {
     reviewMistakesBtn.classList.remove("hidden");
+    // I added the addEventListener inside the function because I have to pass scope variables
+    reviewMistakesBtn.addEventListener("click", function startReview() {
+      playAgainBtn.classList.add("hidden");
+      reviewMistakesBtn.classList.add("hidden");
+      gamePlayingScreen.classList.remove("hidden");
+      wordDisplay.classList.remove("hidden");
+      possibleSolutionsList.classList.remove("hidden");
+      scoreDisplay.classList.add("hidden");
+      nextBtn.classList.remove("hidden");
+      step = 0;
+      nextStep(arrayOfWordObjects, step);
+      reviewMistakesBtn.removeEventListener("click", startReview);
+    });
   }
-  // TODO: Show the current score
-  reviewMistakesBtn.addEventListener("click", function() {
-    playAgainBtn.classList.add("hidden");
-    reviewMistakesBtn.classList.add("hidden");
-    gamePlayingScreen.classList.remove("hidden");
-
-    step = 0;
-    nextStep(arrayOfWordObjects, step);
-  });
 }
 
 // TODO: 'Quit' button should do the same as this function

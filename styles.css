@@ -20,6 +20,10 @@ body {
   display: none;
 }
 
+.start-screen {
+  text-align: center;
+}
+
 .word-display {
   background-color: #fdfdf3;
   width: 50%;
@@ -67,7 +71,6 @@ body {
 .translate-options,
 .word-options {
   line-height: 2rem;
-  text-align: center;
   padding: 1rem;
 }
 
@@ -81,12 +84,11 @@ body {
 }
 
 .main-buttons-container {
-  text-align: center;
   padding: 1rem;
 }
 
 .main-button {
-  font-size: 2rem;
+  font-size: 1.6rem;
   border-radius: 8px;
   border-style: none;
   background-color: #31ed7c;
